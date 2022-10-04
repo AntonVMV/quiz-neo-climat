@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css//normalize.css" />
+    <link rel="stylesheet" href="./css//style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="quiz-container">
+      <div class="welcome-screen">
+        <img src="./images/logo.png" alt="logo" class="welcome-logo" />
+        <h3 class="title-m welcome-title">
+          Пройдите небольшой тест, узнайте примерную стоимость услуг и также
+          получите подарок
+        </h3>
+        <button class="button primary-button">Начать</button>
+      </div>
+
+      <div class="quiz active">
+        <div class="quiz-progress">
+          <p>Завершено: <span class="text-m complete-number">33%</span></p>
+          <div class="progress-bar">
+            <span class="progress-indicate"></span>
+          </div>
+        </div>
+
+        <div class="quiz-body">
+          <form class="quiz-form" autocomplete="off">
+            <fieldset class="quiz-question">
+              <h5 class="title-m quiz-question-title">
+                Выберите тип помещения:
+              </h5>
+              <div class="quiz-answers">
+                <label for="building-1">
+                  <div class="answer-w-img test">
+                    <div class="answer-image">
+                      <img src="./images/flat.png" alt="flat" />
+                    </div>
+                    <p>Квартира</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="building"
+                    id="building-1"
+                    value="Квартира"
+                  />
+                </label>
+                <label for="building-2">
+                  <div class="answer-w-img">
+                    <div class="answer-image">
+                      <img src="./images/house.png" alt="house" />
+                    </div>
+                    <p>Дом</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="building"
+                    id="building-2"
+                    value="Дом"
+                  />
+                </label>
+                <label for="building-3">
+                  <div class="answer-w-img active">
+                    <div class="answer-image">
+                      <img src="./images/office.png" alt="office" />
+                    </div>
+                    <p>Офис</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="building"
+                    id="building-3"
+                    value="Офис"
+                  />
+                </label>
+                <label for="building-4">
+                  <div class="answer-w-img">
+                    <div class="answer-image">
+                      <img src="./images/restaurant.png" alt="restaurant" />
+                    </div>
+                    <p>Ресторан</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="building"
+                    id="building-4"
+                    value="Ресторан"
+                  />
+                </label>
+                <label for="building-5">
+                  <div class="answer-w-img">
+                    <div class="answer-image">
+                      <img src="./images/else-cond.png" alt="other buildings" />
+                    </div>
+                    <p>Другое</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="building"
+                    id="building-5"
+                    value="Другое"
+                  />
+                </label>
+              </div>
+              <div class="quiz-controls">
+                <button class="button primary-button">Далее</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="quiz-question active">
+              <h5 class="title-m quiz-question-title">
+                Примерная площадь помещения:
+              </h5>
+              <div class="quiz-answers text-answers">
+                <label for="build-area-1">
+                  <div class="answer-w-text">50 кв.м.</div>
+                  <input
+                    type="radio"
+                    name="buiding-area"
+                    id="build-area-1"
+                    value="50 кв.м."
+                  />
+                </label>
+                <label for="build-area-2">
+                  <div class="answer-w-text">50-150 кв.м.</div>
+                  <input
+                    type="radio"
+                    name="buiding-area"
+                    id="build-area-2"
+                    value="50-150 кв.м."
+                  />
+                </label>
+                <label for="build-area-3 active">
+                  <div class="answer-w-text active">150-300 кв.м.</div>
+                  <input
+                    type="radio"
+                    name="buiding-area"
+                    id="build-area-3"
+                    value="150-300 кв.м."
+                  />
+                </label>
+                <label for="build-area-4">
+                  <div class="answer-w-text">300-500 кв.м.</div>
+                  <input
+                    type="radio"
+                    name="buiding-area"
+                    id="build-area-4"
+                    value="300-500 кв.м."
+                  />
+                </label>
+                <label for="build-area-5">
+                  <div class="answer-w-text">500-1000 кв.м.</div>
+                  <input
+                    type="radio"
+                    name="buiding-area"
+                    id="build-area-5"
+                    value="500-1000 кв.м."
+                  />
+                </label>
+                <label for="build-area-6">
+                  <div class="answer-w-text">Свыше 1000 кв.м.</div>
+                  <input
+                    type="radio"
+                    name="buiding-area"
+                    id="build-area-6"
+                    value="Свыше 1000 кв.м."
+                  />
+                </label>
+              </div>
+              <div class="quiz-controls">
+                <button class="button primary-button">Назад</button>
+                <button class="button primary-button">Далее</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="quiz-question">
+              <h5 class="title-m quiz-question-title">
+                Какой тип работ хотели бы произвести:
+              </h5>
+              <div class="quiz-answers text-answers">
+                <label for="service-type-1">
+                  <div class="answer-w-text">
+                    Вытяжная вентиляция, удаление запаха и дыма
+                  </div>
+                  <input
+                    type="radio"
+                    name="service-type"
+                    id="service-type-1"
+                    value="Вытяжная вентиляция"
+                  />
+                </label>
+                <label for="service-type-2">
+                  <div class="answer-w-text">
+                    Приточная вентиляция, подача свежего воздуха
+                  </div>
+                  <input
+                    type="radio"
+                    name="service-type"
+                    id="service-type-2"
+                    value="Приточная вентиляция"
+                  />
+                </label>
+                <label for="service-type-3">
+                  <div class="answer-w-text active">
+                    Кондиционирование, регуляция температуры
+                  </div>
+                  <input
+                    type="radio"
+                    name="service-type"
+                    id="service-type-3"
+                    value="Кондиционирование"
+                  />
+                </label>
+                <label for="service-type-4">
+                  <div class="answer-w-text">
+                    Отопление, водопровод, канализация
+                  </div>
+                  <input
+                    type="radio"
+                    name="service-type"
+                    id="service-type-4"
+                    value="Отопление, водопровод"
+                  />
+                </label>
+              </div>
+              <div class="quiz-controls">
+                <button class="button primary-button">Назад</button>
+                <button class="button primary-button">Далее</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="quiz-question">
+              <h5 class="title-m quiz-question-title">
+                Какое нужно оборудование:
+              </h5>
+              <div class="quiz-answers">
+                <label for="equipment-1">
+                  <div class="answer-w-img">
+                    <div class="answer-image">
+                      <img src="./images/cond-photo.jpg" alt="restaurant" />
+                    </div>
+                    <p>Кондиционеры</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="equipment"
+                    id="equipment-1"
+                    value="Кондиционеры"
+                  />
+                </label>
+                <label for="equipment-2">
+                  <div class="answer-w-img">
+                    <div class="answer-image">
+                      <img src="./images/pritok-photo.jpg" alt="restaurant" />
+                    </div>
+                    <p>Приточные установки</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="equipment"
+                    id="equipment-2"
+                    value="Приточная установка"
+                  />
+                </label>
+                <label for="equipment-3">
+                  <div class="answer-w-img active">
+                    <div class="answer-image">
+                      <img src="./images/vent-photo.jpg" alt="restaurant" />
+                    </div>
+                    <p>Вытяжные вентиляторы</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="equipment"
+                    id="equipment-3"
+                    value="Вентиляторы"
+                  />
+                </label>
+                <label for="equipment-4">
+                  <div class="answer-w-img">
+                    <div class="answer-image">
+                      <img src="./images/kotl-photo.jpg" alt="restaurant" />
+                    </div>
+                    <p>Котлы, насосы, нагреватели</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="equipment"
+                    id="equipment-4"
+                    value="Котлы, насосы"
+                  />
+                </label>
+                <label for="equipment-5">
+                  <div class="answer-w-img">
+                    <div class="answer-image">
+                      <img src="./images/dont-need.jpg" alt="restaurant" />
+                    </div>
+                    <p>Не нужно, есть своё</p>
+                  </div>
+                  <input
+                    type="radio"
+                    name="equipment"
+                    id="equipment-5"
+                    value="Своё"
+                  />
+                </label>
+              </div>
+              <div class="quiz-controls">
+                <button class="button primary-button">Назад</button>
+                <button class="button primary-button">Далее</button>
+              </div>
+            </fieldset>
+
+            <fieldset class="quiz-question final-quiestion">
+              <div class="quiz-price">
+                <h5 class="title-s">Примерная стоимость услуг составит:</h5>
+                <p class="text-m discount-number">-21%</p>
+                <p class="text-xl new-price">233 840 р.</p>
+                <p class="text-m prev-price">296 000</p>
+              </div>
+              <div class="quiz-gift">
+                <h5 class="title-m">Выберите подарок:</h5>
+                <div class="quiz-answers">
+                  <label for="gift-1">
+                    <div class="answer-w-img active">
+                      <div class="answer-image">
+                        <img src="./images/cargo-photo.jpg" alt="restaurant" />
+                      </div>
+                      <p>Бесплатная доставка</p>
+                    </div>
+                    <input
+                      type="radio"
+                      name="gift"
+                      id="gift-1"
+                      value="Бесплатная доставка"
+                    />
+                  </label>
+                  <label for="gift-2">
+                    <div class="answer-w-img">
+                      <div class="answer-image">
+                        <img
+                          src="./images/project-photo.png"
+                          alt="restaurant"
+                        />
+                      </div>
+                      <p>Скидка на проект</p>
+                    </div>
+                    <input
+                      type="radio"
+                      name="gift"
+                      id="gift-2"
+                      value="скидка на проект"
+                    />
+                  </label>
+                  <label for="gift-3">
+                    <div class="answer-w-img">
+                      <div class="answer-image">
+                        <img
+                          src="./images/service-photo.jpg"
+                          alt="restaurant"
+                        />
+                      </div>
+                      <p>Бесплатный сервис - 1 год</p>
+                    </div>
+                    <input
+                      type="radio"
+                      name="gift"
+                      id="gift-3"
+                      value="Бесплатный сервис"
+                    />
+                  </label>
+                </div>
+              </div>
+              <div class="quiz-user-info">
+                <p class="text-m">
+                  Оставьте свои контакты и мы свяжемся с вами в ближайшее время
+                </p>
+                <input type="text" name="name" placeholder="Введите имя" />
+                <input type="text" name="phone" placeholder="Номер телефона" />
+                <input type="text" name="email" placeholder="Email" />
+                <button class="button primary-button">Отправить</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+
+        <div class="quiz-side">
+          <div class="bg-content">
+            <div class="discount">
+              <p class="text-m">Ваша скидка:</p>
+              <p class="text-m discount-number">10%</p>
+            </div>
+            <div class="text-l quiz-side_description">
+              <p>Ответьте еще на</p>
+              <p class="question-remains">3</p>
+              <p>вопроса и получите подарок!</p>
+            </div>
+            <img src="./images/logo.png" alt="" class="quiz-side-logo" />
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="end-screen"></div> -->
+    </div>
+
+    <script src="./js/index.js" defer></script>
+  </body>
+</html>
