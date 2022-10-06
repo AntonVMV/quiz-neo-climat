@@ -1,66 +1,11 @@
-const questions = [
-  {
-    question: "Выберите тип помещения",
-    name: "building",
-    answers: [
-      { asnwer: "Квартира", price: 1, image: "./images/flat.png" },
-      { asnwer: "Дом", price: 1.2, image: "./images/house.png" },
-      { asnwer: "Офис", price: 1.4, image: "./images/office.png" },
-      { asnwer: "Ресторан", price: 1.6, image: "./images/restaurant.png" },
-      { asnwer: "Другое", price: 1.6, image: "./images/else-cond.png" },
-    ],
-  },
-  {
-    question: "Примерная площадь помещения",
-    name: "area",
-    answers: [
-      { asnwer: "50 кв.м.", price: 500 },
-      { asnwer: "50-150 кв.м.", price: 750 },
-      { asnwer: "150-300 кв.м.", price: 2250 },
-      { asnwer: "300-500 кв.м.", price: 4000 },
-      { asnwer: "500-1000 кв.м.", price: 7500 },
-      { asnwer: "Более 1000 кв.м.", price: 10000 },
-    ],
-  },
-  {
-    question: "Какой тип работ хотели бы произвести",
-    name: "equipment",
-    answers: [
-      { asnwer: "Вытяжная вентиляция, удаление запаха и дыма", price: 2 },
-      { asnwer: "Приточная вентиляция, подача свежего воздуха", price: 2.2 },
-      { asnwer: "Кондиционирование, регуляция температуры", price: 1.4 },
-      { asnwer: "Отопление, водопровод, канализация", price: 1.8 },
-    ],
-  },
-  {
-    question: "Какое нужно оборудование:",
-    name: "equipment",
-    answers: [
-      { asnwer: "Кондиционеры", price: 1.4, image: "./images/cond-photo.jpg" },
-      {
-        asnwer: "Приточные установки",
-        price: 1.4,
-        image: "./images/pritok-photo.jpg",
-      },
-      {
-        asnwer: "Вытяжные вентиляторы",
-        price: 1.4,
-        image: "./images/vent-photo.jpg",
-      },
-      {
-        asnwer: "Котлы, насосы, нагреватели",
-        price: 1.4,
-        image: "./images/kotl-photo.jpg",
-      },
-      {
-        asnwer: "Не нужно, есть своё",
-        price: 1,
-        image: "./images/dont-need.jpg",
-      },
-    ],
-  },
+const prices = [
+  [2, 2.2, 2.4, 2.6, 2.6],
+  [5000, 7500, 22500, 40000, 75000, 100000],
+  [2.8, 3, 2.4, 2.4],
+  [2, 3, 2.8, 2.6, 1],
 ];
 
+const app = document.querySelector(".quiz-app");
 const screens = document.querySelectorAll("[data-screen]");
 const form = document.querySelector(".quiz-form");
 const formSteps = document.querySelectorAll("[data-step]");
@@ -71,13 +16,21 @@ const questionsRemains = document.querySelector(".question-remains");
 const discount = document.querySelectorAll(".discount-number");
 const sideBar = document.querySelector(".quiz-side");
 const progressBar = document.querySelector(".quiz-progress");
+const price = document.querySelector(".new-price");
+const prevPrice = document.querySelector(".prev-price");
+const errorElement = document.querySelector(".user-form-error");
+const nextQuestionBtns = document.querySelectorAll(".next-question-btn");
 
-const resultObj = {};
+let selections = {};
+let totlalDiscount = -10;
 
 startBtn.addEventListener("click", () => {
   changeActiveElement([...screens], 1);
   changeActiveElement([...formSteps], 0);
+  app.classList.remove("small");
 });
+
+nextQuestionBtns.forEach((item) => item.setAttribute("disabled", ""));
 
 //If there is no active page, set active page to first
 if (checkIsActive([...screens]) < 0) {
@@ -101,6 +54,7 @@ if (checkIsActive([...screens]) < 0) {
         submitHandler();
         return;
       } else {
+        totlalDiscount -= 3;
         changeActiveElement(arr, index + 1);
         updateProgress(index + 1);
       }
@@ -108,14 +62,19 @@ if (checkIsActive([...screens]) < 0) {
 
     if (e.target.matches(".prev-question-btn")) {
       e.preventDefault();
+      totlalDiscount += 3;
       changeActiveElement(arr, index - 1);
       updateProgress(index - 1);
     }
   });
 
   answers.addEventListener("change", (e) => {
-    resultObj[e.target.name] = e.target.value;
     const selectedElement = [...answers.children].indexOf(e.target.parentNode);
+    if (index < arr.length - 1) {
+      selections[index] = prices[index][selectedElement];
+    }
+    console.log(selections);
+    nextQuestionBtns[index].removeAttribute("disabled");
     changeActiveElement([...answers.children], selectedElement);
   });
 });
@@ -135,19 +94,26 @@ function updateProgress(questionPassed) {
     remains
   )}`;
 
-  [...discount].forEach(
-    (item) => (item.innerText = `${parseInt(item.innerText) - 3}%`)
-  );
+  [...discount].forEach((item) => (item.innerText = `${totlalDiscount}%`));
 
   if (questionPassed === formSteps.length - 1) {
+    let totalPrice = Object.values(selections).reduce(
+      (acc, item) => acc * item,
+      1
+    );
+
     sideBar.style.display = "none";
     progressBar.style.display = "none";
+    price.innerText = splitNumber(totalPrice);
+    prevPrice.innerText = splitNumber(
+      totalPrice + (totalPrice / 100) * Math.abs(totlalDiscount)
+    );
   }
 }
 
 function submitHandler() {
   if (!form.checkValidity()) {
-    //validate
+    errorElement.classList.add("visible");
     return;
   }
 
@@ -155,6 +121,7 @@ function submitHandler() {
 
   //fetch, then
 
+  app.classList.add("small");
   changeActiveElement([...screens], 2);
 }
 
@@ -178,20 +145,9 @@ function declension(forms, val) {
   ];
 }
 
-function createQuestionElement(questions) {
-  const fieldsetElement = document.createElement("fieldset");
-  fieldsetElement.classList.add("quiz-question");
-  fieldsetElement.setAttribute("data-step", "");
-
-  const title = document.createElement("h5");
-  title.className = "title-m quiz-question-title";
-  fieldsetElement.appendChild(title);
-
-  const answersContainer = document.createElement("div");
-  answersContainer.className = "quiz-answers";
-  questions.answers.forEach((item, index) => {});
-
-  console.log(fieldsetElement);
+function splitNumber(number) {
+  return number
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+    .concat(" р.");
 }
-
-createQuestionElement(questions[0]);
