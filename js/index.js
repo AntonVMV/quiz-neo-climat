@@ -1,3 +1,5 @@
+window.wpUrl = "<?php echo esc_url(admin_url('admin-ajax.php')); ?>";
+
 const prices = [
   [2, 2.2, 2.4, 2.6, 2.6],
   [5000, 7500, 22500, 40000, 75000, 100000],
@@ -24,17 +26,31 @@ const nextQuestionBtns = document.querySelectorAll(".next-question-btn");
 let selections = {};
 let totlalDiscount = -10;
 
+const currentQuestion = 0;
+
 startBtn.addEventListener("click", () => {
   changeActiveElement([...screens], 1);
-  changeActiveElement([...formSteps], 0);
+  nextQuestion(0);
   app.classList.remove("small");
 });
 
+//Set all next button to disabled
 nextQuestionBtns.forEach((item) => item.setAttribute("disabled", ""));
 
 //If there is no active page, set active page to first
 if (checkIsActive([...screens]) < 0) {
-  changeActiveElement([...screens], 0);
+  screens[0].classList.add("active");
+  formSteps[0].classList.add("active");
+}
+
+function nextQuestion(question) {
+  const answers = formSteps[question].querySelectorAll(".quiz-answer");
+
+  changeActiveElement([...formSteps], question);
+
+  [...answers].forEach((item, index) => {
+    item.style.animationDelay = index * 100 + 500 + "ms";
+  });
 }
 
 [...formSteps].forEach((item, index, arr) => {
@@ -45,7 +61,6 @@ if (checkIsActive([...screens]) < 0) {
       e.preventDefault();
       //Check if an answer is selected, else make 'next' button inactive
       if (checkIsActive([...answers.children]) < 0) {
-        //Show warn
         return;
       }
 
@@ -55,7 +70,8 @@ if (checkIsActive([...screens]) < 0) {
         return;
       } else {
         totlalDiscount -= 3;
-        changeActiveElement(arr, index + 1);
+        // changeActiveElement(arr, index + 1);
+        nextQuestion(index + 1);
         updateProgress(index + 1);
       }
     }
@@ -70,16 +86,20 @@ if (checkIsActive([...screens]) < 0) {
 
   answers.addEventListener("change", (e) => {
     const selectedElement = [...answers.children].indexOf(e.target.parentNode);
+
+    //do not add final question results to totla price
     if (index < arr.length - 1) {
       selections[index] = prices[index][selectedElement];
     }
-    console.log(selections);
+
     nextQuestionBtns[index].removeAttribute("disabled");
-    changeActiveElement([...answers.children], selectedElement);
+    [...answers.children].forEach((item, index) => {
+      item.classList.toggle("active", index === selectedElement);
+    });
   });
 });
 
-//Function to update UI
+//Function to update progress and progress UI
 function updateProgress(questionPassed) {
   const progressInPercents =
     Math.floor(100 / (formSteps.length - 1)) * questionPassed;
@@ -97,13 +117,12 @@ function updateProgress(questionPassed) {
   [...discount].forEach((item) => (item.innerText = `${totlalDiscount}%`));
 
   if (questionPassed === formSteps.length - 1) {
-    let totalPrice = Object.values(selections).reduce(
-      (acc, item) => acc * item,
-      1
+    let totalPrice = Math.round(
+      Object.values(selections).reduce((acc, item) => acc * item, 1)
     );
 
-    sideBar.style.display = "none";
-    progressBar.style.display = "none";
+    waitForAnimEnds(sideBar);
+    waitForAnimEnds(progressBar);
     price.innerText = splitNumber(totalPrice);
     prevPrice.innerText = splitNumber(
       totalPrice + (totalPrice / 100) * Math.abs(totlalDiscount)
@@ -119,17 +138,46 @@ function submitHandler() {
 
   const result = new FormData(form);
 
-  //fetch, then
+  result.append("action", "quiz-data");
 
-  app.classList.add("small");
-  changeActiveElement([...screens], 2);
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", wpUrl);
+  xhr.send();
+  xhr.addEventListener("readystatechange", () => {
+    if (xhr.readyState !== 4) return;
+    if (xhr.status === 200) {
+      console.log(xhr.response);
+      app.classList.add("small");
+      changeActiveElement([...screens], 2);
+    } else {
+      console.log(xhr.statusText);
+    }
+  });
 }
 
-//Set class 'active' only for one element and remove for others
-function changeActiveElement(arr, elemIndex) {
-  arr.forEach((item, index) => {
-    item.classList.toggle("active", elemIndex === index);
+//Change active element
+function changeActiveElement(elems, num) {
+  elems.forEach((item, i, arr) => {
+    if (item.classList.contains("active")) {
+      waitForAnimEnds(item, arr[num]);
+    }
   });
+}
+
+//toggle active class, after animation of previous element is ended
+function waitForAnimEnds(elem, nextEl) {
+  elem.classList.add("to-hide");
+  elem.addEventListener(
+    "animationend",
+    () => {
+      elem.classList.remove("to-hide");
+      elem.classList.remove("active");
+      if (nextEl) {
+        nextEl.classList.add("active");
+      }
+    },
+    { once: true }
+  );
 }
 
 //Check if an array has an element with a class 'active'
@@ -145,6 +193,7 @@ function declension(forms, val) {
   ];
 }
 
+//Function to split price by 3 characters from end, like '23 443 324'
 function splitNumber(number) {
   return number
     .toString()
