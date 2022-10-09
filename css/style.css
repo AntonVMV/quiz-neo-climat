@@ -36,6 +36,10 @@ fieldset {
   font-size: 36px;
 }
 
+.title-l {
+  font-size: 32px;
+}
+
 .title-m {
   font-size: 26px;
   color: #fff;
@@ -64,6 +68,7 @@ fieldset {
   border-radius: 5px;
   font-weight: 600;
   color: #154d75;
+  font-size: 16px;
 }
 
 .primary-button:disabled {
@@ -78,7 +83,7 @@ fieldset {
 
 .quiz-app {
   height: 600px;
-  background-color: rgba(27, 77, 101, 0.75);
+  background: url(/images/quiz-bg.jpg) center center no-repeat;
   transition: 400ms 500ms ease-in-out;
   -webkit-transition: 400ms 500ms ease-in-out;
   -moz-transition: 400ms 500ms ease-in-out;
@@ -129,6 +134,11 @@ fieldset {
   row-gap: 20px;
 }
 
+.welcome-screen p {
+  padding: 0 20px;
+  text-align: center;
+}
+
 .welcome-title {
   max-width: 50%;
   text-align: center;
@@ -149,7 +159,6 @@ fieldset {
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
   align-content: center;
-  /* display: grid; */
 }
 
 .quiz-progress {
@@ -459,6 +468,7 @@ fieldset {
 
 .final-quiestion {
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
   gap: 20px;
   align-self: center;
 }
@@ -494,6 +504,7 @@ fieldset {
   display: grid;
   row-gap: 25px;
   text-align: center;
+  align-content: center;
 }
 
 .quiz-user-info {
@@ -558,8 +569,8 @@ fieldset {
 
 .service-price .discount-number {
   position: absolute;
-  top: -5px;
-  right: -60px;
+  top: -10px;
+  right: -65px;
   margin: 0;
   padding: 5px 15px;
 }
@@ -579,6 +590,62 @@ fieldset {
 .success-icon {
   max-width: 100px;
   max-height: 100px;
+}
+
+.calculatin-plug {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  gap: 10px;
+  justify-items: center;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+.calculatin-plug p {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.calculation-image {
+  position: relative;
+  width: 90px;
+  height: 80px;
+}
+
+.calculatin-plug img {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+}
+
+.calculatin-plug img:first-child {
+  bottom: 0;
+  left: 0;
+  animation: roll 2s linear infinite;
+  -webkit-animation: roll 2s linear infinite;
+}
+
+.calculatin-plug img:last-child {
+  bottom: 25px;
+  left: 40px;
+  animation: invert-roll 2s linear infinite;
+  -webkit-animation: invert-roll 2s linear infinite;
+}
+
+.calculatin-plug.active {
+  display: grid;
+  animation: fadeout 400ms 200ms ease-in-out both;
+  -webkit-animation: fadeout 400ms 200ms ease-in-out both;
+}
+
+.calculatin-plug.to-hide {
+  animation: fadein 400ms ease-in-out forwards;
+  -webkit-animation: fadein 400ms ease-in-out forwards;
 }
 
 @media screen and (max-width: 1200px) {
@@ -714,6 +781,11 @@ fieldset {
     font-weight: 500;
   }
 
+  .welcome-logo {
+    left: 15px;
+    top: 15px;
+  }
+
   .quiz-answers {
     padding: 20px;
     gap: 15px;
@@ -789,5 +861,39 @@ fieldset {
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);
     -o-transform: translateX(0);
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+
+@keyframes invert-roll {
+  0% {
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0);
+  }
+  100% {
+    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
   }
 }
